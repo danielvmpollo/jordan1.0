@@ -5,6 +5,7 @@ package com.sow.jordan.controladores;
 
 import com.sow.jordan.modelos.Usuario;
 import com.sow.jordan.servicios.ServicioUsuario;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller("controladorUsuario") //Indica que la clase es un controlador
 @Scope("session") 
-public class ControladorUsuario {
+public class ControladorUsuario implements Serializable{
     
     @Autowired
     private ServicioUsuario servicioUsuario;
@@ -40,7 +41,7 @@ public class ControladorUsuario {
         this.usuario = new Usuario();
     }
     
-    public void eliminarUsuario(){
+    public void eliminarUsuario(Usuario usuario){
         this.servicioUsuario.eliminarUsuario(usuario);
         usuarios = servicioUsuario.cargarUsuarios();
     }

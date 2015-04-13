@@ -10,7 +10,7 @@ Pagina principal del sistema Jordan.
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <ui:composition template="/Plantillas/plantilla.xhtml">
+    <ui:composition template="/Plantillas/admin.xhtml">
         <ui:define name="content">
             <div align="center">  
                 <h:form>
@@ -30,8 +30,11 @@ Pagina principal del sistema Jordan.
                                      onclick="PF('retirarPrivilegios').show();"/>
                 </h:form>
             </div>    
-            <p:dialog header="Otorgar Privilegios" widgetVar="agregarPrivilegios" modal="true" height="100">
-                <h:form>
+            <p:dialog 
+                header="Otorgar Privilegios" 
+                widgetVar="agregarPrivilegios" 
+                modal="true" height="100%">
+                <h:form id="otorga" >
                     <p:dataTable var="_user" value="#{controladorUsuario.usuarios}">
                         <p:column headerText="Usuario">
                             <h:outputText value="#{_user.usuario}" />
@@ -42,13 +45,19 @@ Pagina principal del sistema Jordan.
                         </p:column>
 
                         <p:column headerText="Otorgar Privilegios">
-                            <p:commandButton value="Otorgar" actionListener="#{_user.setPrivilegio('ADMIN')}" />
+                            <p:commandButton 
+                                value="Otorgar" 
+                                actionListener="#{_user.setPrivilegio('ADMIN')}" 
+                                update="@form :retira"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
             </p:dialog>
-            <p:dialog header="Retirar Privilegios" widgetVar="retirarPrivilegios" modal="true" height="100">
-                <h:form>
+            <p:dialog 
+                header="Retirar Privilegios" 
+                widgetVar="retirarPrivilegios" 
+                modal="true" height="100%">
+                <h:form id="retira" >
                     <p:dataTable var="_user" value="#{controladorUsuario.usuarios}">
                         <p:column headerText="Usuario">
                             <h:outputText value="#{_user.usuario}" />
@@ -59,7 +68,10 @@ Pagina principal del sistema Jordan.
                         </p:column>
 
                         <p:column headerText="Otorgar Privilegios">
-                            <p:commandButton value="Retirar" actionListener="#{_user.setPrivilegio('USER')}"/>
+                            <p:commandButton 
+                                value="Retirar" 
+                                actionListener="#{_user.setPrivilegio('USER')}"
+                                update="@form :otorga"/>
                             <!--p:commandButton value="Retirar" actionListener="{controladorUsuario.retirar(_user)}"/-->
                         </p:column>
                     </p:dataTable>

@@ -11,35 +11,23 @@ Pagina principal del sistema Jordan.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/Plantillas/plantilla.xhtml">
         <ui:define name="content">
-            <h:form id="agregar">
-                <p:panelGrid columns="1">
-                    <h:commandLink value="Agregar Lugar" action="BaseDeDatos/agregarLugares"/>
-                    <h:commandLink value="Agregar Local" action="agregarLocal"/>
-                </p:panelGrid>
-            </h:form>
             <h:form id="top5">
-                <p:growl id="msgs" showDetail="true"/>
-                <h3 style="color: black">Top 5</h3>
-                <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true" 
-                                  value="#{controladorLocal.top5}" var="_local">
-                    <p:tab title="#{_local.nombre}">
-                        <h:panelGrid columns="1">
-                            <p:rating value="#{_local.calificacion}" readonly="true" />
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="/home/olivos/Imágenes/AceLogo.jpeg" />
-                                <h:outputText value="#{_local.alias}" />
-                            </h:panelGrid>
-                        </h:panelGrid>
-                    </p:tab>
-                </p:accordionPanel>
-            </h:form>
-            
-            <p:dataTable  value="#{controladorUsuario.usuarios}" 
-                          id="usuarios" var="_usuario" >
-                <p:column headerText="usuario"> #{_usuario.usuario}</p:column>
-                <p:column headerText="privilegio">#{_usuario.privilegio}</p:column>
-            </p:dataTable>
-            
+                 <p:growl id="msgs" showDetail="true"/>
+                 <h3 style="color: black">Top 5</h3>
+                 <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true" 
+                                   value="#{controladorLocal.top5}" var="_local">
+                     <p:tab title="#{_local.nombre}">
+                         <h:panelGrid columns="1">
+                             <p:rating value="#{_local.calificacion}" readonly="true" />
+                             <h:panelGrid columns="2" cellpadding="10">
+                                <h:graphicImage height="50" name="Imagen.png" /> 
+                                <h:outputText value="#{_local.descripcion}" />
+                                
+                             </h:panelGrid>
+                         </h:panelGrid>
+                     </p:tab>
+                 </p:accordionPanel>
+             </h:form>            
         </ui:define>
     </ui:composition>
 </html>

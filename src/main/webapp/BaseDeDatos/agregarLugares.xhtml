@@ -14,23 +14,61 @@ Pagina para agregar la informacion a la base de datos
         <title>Jordan BD</title>
     </h:head>
     <h:body>
-        
         <h:form>
             <p:panelGrid columns="1" >
-                <p:inputText id="abcd" placeholder="Nombre del lugar" value="#{controladorLocal.lugar.nombre}" />
+                <p:inputText id="lugar" placeholder="Nombre del lugar" required="true"
+                             value="#{controladorLocal.lugar.nombre}" />
+                <p:message for="lugar" />
                 <p:commandButton ajax="false" 
                                  actionListener="#{controladorLocal.guardarLugar()}" 
                                  value="Agregar Lugar" update=":lugares @form"/>
-                <p:dataTable value="#{controladorLocal.lugares}" var="_lugar" 
-                             rowKey="#{_lugar.id}" selection="#{controladorLocal.lugar}" >                       
-                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                <p:dataTable value="#{controladorLocal.lugares}" var="_lugar">
                     <p:column headerText="Lugar">#{_lugar.nombre}</p:column>
                 </p:dataTable> 
-                
-                <p:message for="abcd"/>
-                <p:commandButton  value="Ver valor"   actionListener="#{controladorLocal.guardarLugar()}"  />
-
             </p:panelGrid>
         </h:form>
+        <h:form>
+            <p:panelGrid columns="2" >
+                <p:inputText id="servicio" placeholder="Nombre del servicio" required="true"
+                             value="#{controladorLocal.servicio.nombre}" />
+                <h:outputText  value="Foto local" />
+
+                <p:fileUpload 
+                    fileUploadListener="#{controladorLocal.imagenServicio}" 
+                    mode="advanced"  
+                    auto="false"
+                    value="#{controladorLocal.servicio.imagen}"
+                    sizeLimit="2097152" 
+                    multiple="false"
+                    update="foto"
+                    immediate="true"
+                    invalidFileMessage="Tipo de archivo invalido"
+                    uploadLabel="añadir"
+                    label="elegir"
+
+                    allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                <h:graphicImage 
+                    value="data:image/png;base64,#{controladorLocal.servicio.imagenUrl}"
+                    rendered="#{controladorLocal.servicio.imagen ne null}"
+                    id="foto"
+                    height="200"
+                    />
+                
+                <p:commandButton ajax="false" 
+                                 actionListener="#{controladorLocal.guardarServicio()}" 
+                                 value="Agregar Servicio" update=":servicios @form"/>
+                <p:dataTable value="#{controladorLocal.servicios}" var="_servicio">                       
+                    <p:column headerText="Servicio">#{_servicio.nombre}</p:column>
+                    <p:column headerText="Imagen">
+                        <h:graphicImage 
+                            value="data:image;base64,#{_servicio.imagenUrl}"
+                            rendered="#{_servicio.imagen ne null}"     
+                                   height="150"
+                                   />
+                    </p:column>
+                </p:dataTable>
+            </p:panelGrid>
+        </h:form>   
     </h:body>
 </html>

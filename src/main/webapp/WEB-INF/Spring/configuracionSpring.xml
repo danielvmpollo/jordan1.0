@@ -5,7 +5,6 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        
-       
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
@@ -26,14 +25,23 @@
         <property name="local" >
             <bean class="com.sow.jordan.modelos.Local">
                 <property name="nombre" value="" />
-                <property name="alias" value="" />
             </bean>
         </property>
         <property name="lugar" >
             <bean class="com.sow.jordan.modelos.Lugar">
-                <property name="nombre" value="" />
+                <property name="nombre" value="Nuevo" />
             </bean>
         </property>
+        <property name="servicio">
+            <bean class="com.sow.jordan.modelos.Servicio">
+                <property name="nombre" value="Nombre del servivio"/>
+            </bean>
+        </property>
+        <property name="menu">
+            <bean class="com.sow.jordan.modelos.Menu">
+                <property name="categoria" value="Nombre del menu"/>
+             </bean>
+         </property>
     </bean>
     
     <bean id="controladorUsuario" class="com.sow.jordan.controladores.ControladorUsuario" scope="session">
@@ -57,10 +65,9 @@
     <!--Base de datos-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.h2.Driver"/>
-        <!--property name="url" value="jdbc:h2:/home/olivos/Documentos/Facultad/Ingeniería de Software/Proyecto/Programa/BaseDeDatos"/-->
         <!--property name="url" value="jdbc:h2:/home/olivos/Documentos/Facultad/Ingenieria de Software/Proyecto/Programa/BaseDeDatos"/-->
-        <!--property name="url" value="jdbc:h2:F:\Documentos\BasesDatos\jordan1.0"/-->
-        <property name="url" value="jdbc:h2:./test"/>
+        <property name="url" value="jdbc:h2:F:\Documentos\BasesDatos\jordan1.0"/>
+        <!--property name="url" value="jdbc:h2:./test"/-->
         <property name="username"  value="sa"/>
         <property name="password" value=""/>
     </bean>
@@ -79,7 +86,7 @@
                 <prop key="hibernate.jdbc.batch_size">10</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>  
-                <!--prop key="hibernate.hbm2ddl.auto">update</prop-->       
+                <prop key="hibernate.hbm2ddl.auto">create</prop>       
             </props>
         </property> 
     </bean>

@@ -3,6 +3,7 @@
  */
 package com.sow.jordan.modelos;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name="Lugar")
-public class Lugar {
+public class Lugar implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

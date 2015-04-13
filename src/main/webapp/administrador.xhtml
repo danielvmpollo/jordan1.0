@@ -10,7 +10,7 @@ Pagina principal del sistema Jordan.
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <ui:composition template="/Plantillas/plantilla.xhtml">
+    <ui:composition template="/Plantillas/admin.xhtml">
         <ui:define name="content">
             <div align="center">  
                 <h:form>
@@ -56,131 +56,128 @@ Pagina principal del sistema Jordan.
             </p:dialog-->
             <p:dialog header="Agregar Establecimiento" 
                       widgetVar="agregarEstablecimiento" 
-                      modal="true" height="50%" width="50%">
-                <h:form id="agregar">
-                <h:panelGrid id="establecimiento" columns="2">
-                    <h:panelGrid id="local" columns="2">
-                        <p:outputLabel value="Nombre: "/>
-                        <p:inputText id="nombre" value="Nombre" />
-                        <p:outputLabel value="Alias: "/>
-                        <p:inputText id="alias" value="Alias" />
-                        <p:outputLabel value="Lugar: "/>
-                        
-                        <p:selectOneMenu id="lugar" style="width:160px">
-                            <f:selectItem itemLabel="lugar" itemValue="Lugar" />
-                            <f:selectItem itemLabel="lugar1" itemValue="lugar1" />
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="Especialidad: "/>
-                        <p:inputText id="especialidad" value="Especialidad" />
-                        <p:outputLabel value="Precio: "/>
-                        <h:panelGrid id="precio" columns="3">
-                            <p:inputText id="menor" value="Menor" style="width:60px"/>
-                            <p:outputLabel value=" a "/>
-                            <p:inputText id="mayor" value="Mayor" style="width:60px"/>
-                        </h:panelGrid>
-                        <p:outputLabel value="Latitud: "/>
-                        <p:inputText id="latitud" value="Latitud" />
-                        <p:outputLabel value="Longitud: "/>
-                        <p:inputText id="Longitud" value="Longitud" />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="6">
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Wi-Fi (RIU, TELMEX,Avierto)" />
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Wi-Fi (Privado)" />
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Estacionamiento Academicos" />
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Estacionamiento Publico" />
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Para Comer" />
-                        
-                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                        <h:outputText value="Para Llevar" />
-                    </h:panelGrid>
-                    <p:panelGrid columns="1">
-                        <p:outputLabel value="Descripción"/>
-                        <p:inputTextarea rows="9" cols="37" />
-                    </p:panelGrid>
-                    <h:panelGrid columns="2">
-                        <p:panelGrid columns="1">
-                            <p:outputLabel value="Metro"/>
-                            <p:selectOneRadio id="metro"  layout="grid" columns="1">
-                                <f:selectItem itemLabel="Copilco" itemValue="copilco"/>
-                                <f:selectItem itemLabel="Universidad" itemValue="universidad"/>
-                                <f:selectItem itemLabel="No" itemValue="no"/>
-                            </p:selectOneRadio>
-                        </p:panelGrid>
-                        <p:panelGrid columns="1">
-                            <p:outputLabel value="Metrobús"/>
-                            <p:selectOneRadio id="metrobus" layout="grid" columns="1">
-                                <f:selectItem itemLabel="CCU" itemValue="ccu"/>
-                                <f:selectItem itemLabel="Ciudad Universitaria" itemValue="ciudad universitacia"/>
-                                <f:selectItem itemLabel="Dr. Gálvez" itemValue="dr galvez"/>
-                                <f:selectItem itemLabel="No" itemValue="no"/>
-                            </p:selectOneRadio>
-                        </p:panelGrid>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid columns="1">
-                        <p:dataTable value="#{controladorLocal.locales}" id="menu" var="_local" > 
-                            <p:column headerText="Categoría">
-                            #{_local.id}
-                            </p:column>
-                            <p:column headerText="Precio Min">
-                            #{_local.nombre}
-                            </p:column>
-                            <p:column headerText="Precio Max">
-                            #{_local.alias}
-                            </p:column>
-                            <p:column style="width:24px">
-                                <p:commandButton value="Borrar" id="ajax" update="growl"  styleClass="ui-priority-primary" />
-                            </p:column>
-                        </p:dataTable>
-                        <h:panelGrid columns="3">
-                            <p:inputText id="categoria" value="Categoria" />
-                            <p:inputText id="preciomin" value="Precio Min" />
-                            <p:inputText id="preciomax" value="Precio Max" />
-                            <p:commandButton value="Agregar" />
-                        </h:panelGrid>
-                    </h:panelGrid>
-                    <h:panelGrid columns="2">
+                      modal="true" height="100%" width="80%">
+                <h:form id="form">
+                    <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                            <p:dataTable value="#{controladorLocal.locales}" id="pumabus" var="_local" > 
-                                <p:column headerText="Estación">
-                                    #{_local.id}
+                            <h:panelGrid id="local" columns="2">
+                                <p:outputLabel value="Nombre: "/>
+                                <p:inputText id="nombre" placeholder="Nombre" 
+                                             value="#{controladorLocal.local.nombre}" required="true"/>
+                                <p:outputLabel value="Alias: "/>
+                                <p:inputText id="alias" placeholder="Alias" 
+                                             value="#{controladorLocal.local.alias}"/>
+                                <p:outputLabel value="Lugar: "/>
+
+                                <p:selectOneMenu id="lugar" effect="fade" panelStyle="width:180px"
+                                                 value="#{controladorLocal.local.lugar}" >
+                                    <f:selectItem itemLabel="Seleccione un lugar" itemValue="" />
+                                    <f:selectItems itemLabel="#{lugar.nombre}" itemValue="#{lugar}"
+                                                   value="#{controladorLocal.lugares}" var="lugar" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Especialidad: "/>
+                                <p:inputText id="especialidad" placeholder="Especialidad" 
+                                             value="#{controladorLocal.local.especialidad}"/>
+                                <p:outputLabel value="Precio: "/>
+                                <p:outputLabel value="Latitud: "/>
+                                <p:inputText id="latitud" placeholder="Latitud" 
+                                             value="#{controladorLocal.local.latitud}"/>
+                                <p:outputLabel value="Longitud: "/>
+                                <p:inputText id="longitud" placeholder="Longitud" 
+                                             value="#{controladorLocal.local.longitud}"/>
+                            </h:panelGrid>
+                            <p:fileUpload fileUploadListener="#{controladorLocal.imagenLocal}"
+                                          value="#{controladorLocal.local.imagen}"/>
+                        </h:panelGrid>
+
+                        <p:panelGrid columns="1">
+                            <h:graphicImage height="200" name="Imagen.png" /> 
+                        </p:panelGrid>
+
+                        <h:panelGrid columns="1"  width="300">
+                            <p:dataTable value="#{controladorLocal.servicios}"
+                                         var="_servicio" 
+                                         rowKey="#{_servicio.id}"
+                                         selection="#{controladorLocal.local.servicios}"
+                                         >                       
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                <p:column style="width:30px;text-align:center">
+                                    <p:graphicImage name="Imagen.jpg" width="30px"/>
                                 </p:column>
-                                <p:column style="width:24px">
-                                    <p:commandButton value="Borrar" id="ajax" update="growl"  styleClass="ui-priority-primary" />
+                                <p:column headerText="Seleccione los servicio" >
+                                #{_servicio.nombre}
                                 </p:column>
                             </p:dataTable>
-                            <p:inputText id="estacion" value="Estación" />
-                            <p:commandButton value="Agregar" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                            <p:dataTable value="#{controladorLocal.locales}" id="bicipuma" var="_local" > 
-                                <p:column headerText="Estación">
-                                    #{_local.id}
-                                </p:column>
-                                <p:column style="width:24px">
-                                    <p:commandButton value="Borrar" id="ajax" update="growl"  styleClass="ui-priority-primary" />
-                                </p:column>
-                            </p:dataTable>
-                            <p:inputText id="estacionbisi" value="Estación" />
-                            <p:commandButton value="Agregar" />
                         </h:panelGrid>
                     </h:panelGrid>
-                </h:panelGrid>
-                <p:commandButton value="Agregar Establecimiento" />
-            </h:form>
+
+                    <h:panelGrid id="establecimiento" columns="2">
+                        <p:panelGrid columns="1">
+                            <p:outputLabel value="Descripción"/>
+                            <p:inputTextarea id="descripcion" cols="100" rows="5"
+                                             placeholder="Descripción" 
+                                             value="#{controladorLocal.local.descripcion}"/>
+                        </p:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:dataTable value="#{controladorLocal.local.menu}" var="_menu"> 
+                                <p:column headerText="Categoría">
+                                #{_menu.categoria}
+                                </p:column>
+                                <p:column headerText="Precio Min">
+                                #{_menu.precioMin}
+                                </p:column>
+                                <p:column headerText="Precio Max">
+                                #{_menu.precioMax}
+                                </p:column>
+                                <p:column >
+                                    <p:commandButton value="Borrar" />
+                                </p:column>
+                            </p:dataTable>﻿
+                            <h:panelGrid columns="3" id="panelMenu">
+                                <p:inputText id="categoria" placeholder="Categoria"
+                                             value="#{controladorLocal.menu.categoria}" />
+                                <p:inputText id="preciomin" placeholder="Precio min"
+                                             value="#{controladorLocal.menu.precioMin}" />
+                                <p:inputText id="preciomax" placeholder="Precio max"
+                                             value="#{controladorLocal.menu.precioMax}" />
+                                <p:commandButton actionListener="#{controladorLocal.guardarMenu()}"
+                                                 value="Agregar Menu" update=":menus @form" />
+                            </h:panelGrid>
+
+                            <!--Tabla de tranportes-->
+                            <p:dataTable value="#{controladorLocal.local.transporte}" var="_transporte"> 
+                                <p:column headerText="Estación">
+                                #{_transporte.estacion}
+                                </p:column>
+                                <p:column headerText="Tipo">
+                                #{_transporte.tipo}
+                                </p:column>
+                            </p:dataTable>﻿
+                            <h:panelGrid columns="3" id="panelTransporte">
+                                <p:inputText id="estacion" placeholder="Estación"
+                                             value="#{controladorLocal.transporte.estacion}" />
+                                <p:inputText id="tipo" placeholder="Tipo"
+                                             value="#{controladorLocal.transporte.tipo}" />
+                                <p:commandButton actionListener="#{controladorLocal.guardarTransporte()}"
+                                                 value="Agregar Transporte" update=":menus @form" />
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+
+                    <p:commandButton ajax="false" 
+                                     actionListener="#{controladorLocal.guardarLocal()}" 
+                                     value="Agregar Local" update=":locales @form"/>
+                </h:form>
+
+                <h:form id="menus"> </h:form>
             </p:dialog>
-            <p:dialog header="Eliminar Establecimiento" widgetVar="eliminarEstablecimiento" modal="true" height="100">
+            <p:dialog 
+                header="Eliminar Establecimiento" 
+                widgetVar="eliminarEstablecimiento" 
+                modal="true" height="100%">
                 <h:form>
                     <p:dataTable var="_local" value="#{controladorLocal.locales}">
                         <p:column headerText="Local">
@@ -196,12 +193,17 @@ Pagina principal del sistema Jordan.
                         </p:column>
 
                         <p:column headerText="Eliminar Local">
-                            <p:commandButton value="Eliminar" actionListener="#{controladorLocal.eliminarLocal()}" />
+                            <p:commandButton value="Eliminar" 
+                                             actionListener="#{controladorLocal.eliminarLocal(_local)}" 
+                                             update="@form"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
             </p:dialog>
-            <p:dialog header="Eliminar Usuario" widgetVar="eliminarUsuario" modal="true" height="100">
+            <p:dialog 
+                header="Eliminar Usuario" 
+                widgetVar="eliminarUsuario" 
+                modal="true" height="100%">
                 <h:form id="elimina">
                     <p:dataTable var="_user" value="#{controladorUsuario.usuarios}">
                         <p:column headerText="Nombre">
@@ -227,7 +229,8 @@ Pagina principal del sistema Jordan.
                         <p:column headerText="Eliminar Usuario">
                             <p:commandButton 
                                 value="Eliminar" 
-                                actionListener="#{controladorUsuario.eliminarUsuario()}"
+                                actionListener="#{controladorUsuario.eliminarUsuario(_user)}"
+                                update="@form"
                                 />
                         </p:column>
                     </p:dataTable>

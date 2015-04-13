@@ -4,9 +4,11 @@
 package com.sow.jordan.modelos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -24,32 +26,84 @@ public class Local implements Serializable{
     private Integer id;
     
     @NotNull
-    @Column(name = "nombre")
     private String nombre;
     
-    @Column(name = "alias")
     private String alias;
     
     @ManyToOne
     private Lugar lugar;
     
-    @Column(name = "latitud")
+    @NotNull
     private Double latitud;
     
-    @Column(name = "longitud")
+    @NotNull
     private Double longitud;
     
-    @Column(name = "especialidad")
     private String especialidad;
     
-    @Column(name = "precioMin")
-    private Double precioMin;
-    
-    @Column(name = "precioMax")
-    private Double precioMax;
-    
-    @Column(name = "descripcion")
     private String descripcion;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Servicio> servicios;
+    
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "local",
+            orphanRemoval = true)
+    private List<Menu> menu;
+    
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "local",
+            orphanRemoval = true)
+    private List<Transporte> transporte;
+    
+    @Lob
+    @Column(name = "imagen", columnDefinition = "LONGBLOB")
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] imagen;
+
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
+    }
+
+    public List<Menu> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<Menu> menu) {
+        this.menu = menu;
+    }
+
+    public List<Transporte> getTransporte() {
+        return transporte;
+    }
+
+    public void setTransporte(List<Transporte> transporte) {
+        this.transporte = transporte;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+    
+    public String getImagenUrl() {
+        if (this != null && this.getImagen()!= null) {
+            BASE64Encoder encoder = new BASE64Encoder();
+            String imageString = encoder.encode(this.getImagen());
+            return imageString;
+        } else {
+            return null;
+        }
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
     
     public Integer getId() {
         return id;
@@ -107,22 +161,6 @@ public class Local implements Serializable{
         this.longitud = longitud;
     }
 
-    public Double getPrecioMin() {
-        return precioMin;
-    }
-
-    public void setPrecioMin(Double precioMin) {
-        this.precioMin = precioMin;
-    }
-
-    public Double getPrecioMax() {
-        return precioMax;
-    }
-
-    public void setPrecioMax(Double precioMax) {
-        this.precioMax = precioMax;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -140,8 +178,6 @@ public class Local implements Serializable{
         hash = 53 * hash + Objects.hashCode(this.especialidad);
         hash = 53 * hash + Objects.hashCode(this.latitud);
         hash = 53 * hash + Objects.hashCode(this.longitud);
-        hash = 53 * hash + Objects.hashCode(this.precioMin);
-        hash = 53 * hash + Objects.hashCode(this.precioMax);
         hash = 53 * hash + Objects.hashCode(this.descripcion);
         return hash;
     }    

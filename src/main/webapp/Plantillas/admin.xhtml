@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <title>Jordan-Administración</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <h:form id="busqueda">
+                    <p:menubar >
+                        <p:menuitem value="HOME" style="margin-right: 20pt; color: black; font-size: 20pt; float: left" url="../jordan"/>
+                        
+                        <p:menuitem >
+                            <p:commandButton 
+                                icon="ui-icon-key" 
+                                value="Iniciar Sesión" 
+                                title="Iniciar Sesión" 
+                                onclick="PF('logeo').show();" 
+                                style="margin: 5pt"/>
+                        </p:menuitem>
+                    </p:menubar>
+                </h:form>
+                
+                <h:form id="iniciarSesion">
+                    <p:dialog header="INICIAR SESIÓN" widgetVar="logeo" modal="true" 
+                              height="220" closable="true" style="width: 120px;"> <br/>
+                        <p:inputText placeholder="Usuario" /><br/><br/><br/>
+                        <p:password placeholder="Contraseña" /><br/><br/><br/>
+                        <div align="center">
+                            <p:commandButton value="Entrar" /><br/><br/>
+                            <!--Validar usuario-->
+                            <p:commandLink value="Recuperar Contraseña" style="color: cornflowerblue"
+                                           onclick="PF('recuperar').show();PF('logeo').hide();"/><br/>
+                            <p:commandLink value="Registrarse" style="color: cornflowerblue" onclick="PF('registro').show();PF('logeo').hide();"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="agregarUsuarios">
+                    <p:dialog header="REGISTRAR" widgetVar="registro"  
+                              height="300" width="210" modal="true"> <br/>
+                        <p:inputText placeholder="Nombre Completo" required="true"
+                                     value="#{controladorUsuario.usuario.nombre}" />
+                        <br/><br/>
+                        <p:inputText placeholder="Usuario" required="true"
+                                     value="#{controladorUsuario.usuario.usuario}" />
+                        <br/><br/>
+                        <p:inputText id="correo" placeholder="Correo" required="true"
+                                     value="#{controladorUsuario.usuario.correo}" 
+                                     validatorMessage="Correo invalido"
+                                     requiredMessage="Por favor ingresa tu correo">
+                            <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            <p:ajax update="msgLastname" event="keyup" />
+                        </p:inputText>
+                        <p:watermark for="correo" value="Correo" />
+                        <p:message for="correo" id="msgLastname"/>
+                        <br/><br/>
+                        <p:password id="pass" placeholder="contraseña" match="confirmacion" 
+                                    label="contarseña" required="true"
+                                    value="#{controladorUsuario.usuario.contrasena}" />
+                        <br/><br/>
+                        <p:password id="confirmacion" placeholder="Confirmar Contraseña" 
+                                    label="confirmación" required="true"
+                                    value="#{controladorUsuario.usuario.contrasena}"/>
+                        <div align="center">
+                            <br/>
+                            <p:commandButton ajax="false" actionListener="#{controladorUsuario.guardarUsuario()}" 
+                                             value = "Registrarse" update=":usuarios @form"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="recuperrarContraseña">
+                    <p:dialog header="RECUPERAR CONTRASEÑA" widgetVar="recuperar" modal="true"
+                              height="100" closable="true" style="width: 120px;"><br/>
+                        <p:inputText placeholder="Correo" /><br/><br/><br/>
+                        <div align="center">
+                            <p:commandButton value="Recuperar Contraseña"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

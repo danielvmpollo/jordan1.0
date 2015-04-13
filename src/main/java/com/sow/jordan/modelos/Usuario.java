@@ -3,6 +3,7 @@
  */
 package com.sow.jordan.modelos;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "Usuario")
-public class Usuario {
+public class Usuario implements Serializable {
     
     @Id
     private String usuario;
@@ -79,16 +80,4 @@ public class Usuario {
     public void setPrivilegio(String privilegio) {
         this.privilegio = privilegio;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.usuario);
-        hash = 37 * hash + Objects.hashCode(this.contrasena);
-        hash = 37 * hash + Objects.hashCode(this.nombre);
-        hash = 37 * hash + Objects.hashCode(this.correo);
-        hash = 37 * hash + Objects.hashCode(this.privilegio);
-        return hash;
-    }    
-    
 }
