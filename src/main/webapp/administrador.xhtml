@@ -69,17 +69,18 @@ Pagina principal del sistema Jordan.
                                              value="#{controladorLocal.local.alias}"/>
                                 <p:outputLabel value="Lugar: "/>
 
-                                <p:selectOneMenu id="lugar" effect="fade" panelStyle="width:180px"
-                                                 value="#{controladorLocal.local.lugar}" >
+                                <p:selectOneMenu id="lugar" effect="fade" style="width: 100%"
+                                                 value="#{controladorLocal.idlugar}" >
                                     <f:selectItem itemLabel="Seleccione un lugar" itemValue="" />
-                                    <f:selectItems itemLabel="#{lugar.nombre}" itemValue="#{lugar}"
-                                                   value="#{controladorLocal.lugares}" var="lugar" />
+                                    <f:selectItems 
+                                        value="#{controladorLocal.lugares}" 
+                                        var="_lugar" itemLabel="#{_lugar.nombre}"
+                                        itemValue="#{_lugar.id}"/>
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Especialidad: "/>
                                 <p:inputText id="especialidad" placeholder="Especialidad" 
                                              value="#{controladorLocal.local.especialidad}"/>
-                                <p:outputLabel value="Precio: "/>
                                 <p:outputLabel value="Latitud: "/>
                                 <p:inputText id="latitud" placeholder="Latitud" 
                                              value="#{controladorLocal.local.latitud}"/>
@@ -87,12 +88,14 @@ Pagina principal del sistema Jordan.
                                 <p:inputText id="longitud" placeholder="Longitud" 
                                              value="#{controladorLocal.local.longitud}"/>
                             </h:panelGrid>
-                            <p:fileUpload fileUploadListener="#{controladorLocal.imagenLocal}"
-                                          value="#{controladorLocal.local.imagen}"/>
                         </h:panelGrid>
 
                         <p:panelGrid columns="1">
-                            <h:graphicImage height="200" name="Imagen.png" /> 
+                            <p:fileUpload 
+                                
+                                />
+                            <h:graphicImage 
+                                name="twitter.jpg"/> 
                         </p:panelGrid>
 
                         <h:panelGrid columns="1"  width="300">
@@ -115,7 +118,7 @@ Pagina principal del sistema Jordan.
                     <h:panelGrid id="establecimiento" columns="2">
                         <p:panelGrid columns="1">
                             <p:outputLabel value="Descripción"/>
-                            <p:inputTextarea id="descripcion" cols="100" rows="5"
+                            <p:inputTextarea id="descripcion" cols="30" rows="5"
                                              placeholder="Descripción" 
                                              value="#{controladorLocal.local.descripcion}"/>
                         </p:panelGrid>
@@ -131,7 +134,9 @@ Pagina principal del sistema Jordan.
                                 #{_menu.precioMax}
                                 </p:column>
                                 <p:column >
-                                    <p:commandButton value="Borrar" />
+                                    <p:commandButton 
+                                        value="Borrar" update=":menus @form"
+                                        actionListener="#{controladorLocal.borrarMenu(_menu)}"/>
                                 </p:column>
                             </p:dataTable>﻿
                             <h:panelGrid columns="3" id="panelMenu">
@@ -152,6 +157,11 @@ Pagina principal del sistema Jordan.
                                 </p:column>
                                 <p:column headerText="Tipo">
                                 #{_transporte.tipo}
+                                </p:column>
+                                <p:column >
+                                    <p:commandButton 
+                                        value="Borrar" update=":menus @form"
+                                        actionListener="#{controladorLocal.borrarTransporte(_transporte)}"/>
                                 </p:column>
                             </p:dataTable>﻿
                             <h:panelGrid columns="3" id="panelTransporte">
@@ -174,6 +184,7 @@ Pagina principal del sistema Jordan.
 
                 <h:form id="menus"> </h:form>
             </p:dialog>
+            
             <p:dialog 
                 header="Eliminar Establecimiento" 
                 widgetVar="eliminarEstablecimiento" 
@@ -189,7 +200,7 @@ Pagina principal del sistema Jordan.
                         </p:column>
 
                         <p:column headerText="Lugar">
-                            <h:outputText value="#{_local.lugar}" />
+                            <h:outputText value="#{_local.lugar.nombre}" />
                         </p:column>
 
                         <p:column headerText="Eliminar Local">

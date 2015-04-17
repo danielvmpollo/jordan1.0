@@ -11,8 +11,12 @@ import com.sow.jordan.modelos.Transporte;
 import com.sow.jordan.servicios.ServicioLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +40,23 @@ public class ControladorLocal implements Serializable {
     private List<Local> locales;
     private Local local;
     private List<Lugar> lugares;
+    private Map<String,Lugar> lugares2;
     private Lugar lugar;
     private List<Servicio> servicios;
     private Servicio servicio;
     private Menu menu;
     private Transporte transporte;
+    private int idlugar;
+    //
+    private int i = 1;
 
     @PostConstruct //Indica que se ejecutara despues de la inyeccion de dependencias
     public void inicio() {
         lugares = servicioLocal.cargarLugares();
+        /*lugares2 = new HashMap<String,Lugar>();
+        for(Lugar l : lugares)
+            lugares2.put(l.getNombre(), l);
+        */
         locales = servicioLocal.cargarLocales();
         servicios = servicioLocal.cargarServicios();
         this.menu=new Menu();
@@ -53,7 +65,17 @@ public class ControladorLocal implements Serializable {
         this.local.setTransporte(new ArrayList<Transporte>());
     }
 
+    public Map<String, Lugar> getLugares2() {
+        return lugares2;
+    }
+
+    public void setLugares2(Map<String, Lugar> lugares2) {
+        this.lugares2 = lugares2;
+    }
+    
     public void guardarLocal() {
+        lugar = servicioLocal.buscarLugar(idlugar).listIterator().next();
+        local.setLugar(lugar);
         this.servicioLocal.guardarLocal(local);
         this.locales = servicioLocal.cargarLocales();
         this.local = new Local();
@@ -89,6 +111,10 @@ public class ControladorLocal implements Serializable {
         menu = new Menu();
     }
     
+    public void borrarMenu(Menu menu){
+        this.local.getMenu().remove(menu);
+    }
+    
     /**
      * Método que guarda los trasportes
      */
@@ -97,6 +123,9 @@ public class ControladorLocal implements Serializable {
         transporte = new Transporte();
     }
     
+    public void borrarTransporte(Transporte transporte){
+        this.local.getTransporte().remove(transporte);
+    }
     /**
      * 
      * @param event 
@@ -187,8 +216,25 @@ public class ControladorLocal implements Serializable {
         this.transporte = transporte;
     }
 
+    public int getIdlugar() {
+        return idlugar;
+    }
+
+    public void setIdlugar(int idlugar) {
+        this.idlugar = idlugar;
+    }
+    
     public List<Local> getTop5() {
+        i = 1;
         return locales;
     }
 
+    public int getI() {
+        return i++;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+    
 }

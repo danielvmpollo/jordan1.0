@@ -20,4 +20,7 @@ public interface RepositorioLugar extends CrudRepository<Lugar, Integer> {
     @Query("SELECT lugar FROM Lugar lugar")
     List<Lugar> cargarLugares();
     
+    @Query("SELECT lugar FROM Lugar lugar WHERE lugar.id = ?")
+    List<Lugar> buscarLugar(Integer id);
+    
 }

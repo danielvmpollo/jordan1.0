@@ -80,5 +80,10 @@ public class ServicioLocalImplementacion implements ServicioLocal{
     public List<Servicio> cargarServicios() {
         return repositorioServicio.cargarServicios();
     }
+
+    @Override
+    public List<Lugar> buscarLugar(int id) {
+        return repositorioLugar.buscarLugar(id);
+    }
     
 }

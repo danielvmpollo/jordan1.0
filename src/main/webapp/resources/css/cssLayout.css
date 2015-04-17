@@ -93,3 +93,7 @@ background: linear-gradient(white, gray); /* Standard syntax */
     background-color: red;
     margin: 100pt;
 }
+
+.alignTop {
+vertical-align: top;
+}

@@ -56,7 +56,7 @@ public class Local implements Serializable{
             cascade = CascadeType.ALL,
             mappedBy = "local",
             orphanRemoval = true)
-    private List<Transporte> transporte;
+    private List<Transporte> transportes;
     
     @Lob
     @Column(name = "imagen", columnDefinition = "LONGBLOB")
@@ -80,11 +80,11 @@ public class Local implements Serializable{
     }
 
     public List<Transporte> getTransporte() {
-        return transporte;
+        return transportes;
     }
 
-    public void setTransporte(List<Transporte> transporte) {
-        this.transporte = transporte;
+    public void setTransporte(List<Transporte> transportes) {
+        this.transportes = transportes;
     }
 
     public byte[] getImagen() {

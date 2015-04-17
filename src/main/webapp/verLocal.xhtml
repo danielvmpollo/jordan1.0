@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Pagina principal del sistema Jordan.
+-->    
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/Plantillas/plantilla.xhtml">
+        <ui:define name="content">
+            <script type="text/javascript" 
+                src="http://maps.googleapis.com/maps/api/js"
+                />
+        <script type="text/javascript"> 
+            var marker = null;
+            function agregaMarcador(event) {
+               if(window.marker!==null){
+                   marker.setMap(null);
+               }
+                var punto=new google.maps.LatLng(
+                        event.latLng.lat(), 
+                event.latLng.lng()
+                        );
+                window.marker = new google.maps.Marker({
+                        position:punto,
+                        title:'Lugar'
+                    });
+                    
+                    PF('map').addOverlay(marker);
+            };
+            </script>
+            <h:panelGrid columns="2" style="font-size: 12pt" columnClasses="alignTop,alignTop">
+                <p:column>
+                    <h:graphicImage name="facebook.jpg" height="200" />
+                    
+                    <p:scrollPanel style="width:100%;height:100%">
+                        <p:dataTable value="#{controladorLocal.local.transporte}" var="_transporte"> 
+                            <p:column headerText="Estación" >
+                                <h:outputText value="#{_transporte.estacion}" />
+                            </p:column>
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{_transporte.tipo}" />
+                            </p:column>
+                        </p:dataTable>﻿
+                    </p:scrollPanel>
+                    
+                    <h:form id="form">
+                        <p:outputLabel value="Ubicacion" />
+                    <p:gmap id="gmap" center="19.3142052,-99.1835216" zoom="13" 
+                        type="HYBRID" 
+                        style="height:200pt"
+                        onPointClick="agregaMarcador(event);"
+                        widgetVar="map"
+                        disableDoubleClickZoom="true" 
+                        />
+                    </h:form>
+                </p:column>
+                <h:column>
+                    <p:row>
+                        <h:panelGrid columns="2">
+                            <h:column>
+                                Local: Nombre local (Alias)
+                            </h:column>
+                            <h:column>
+                                <p:rating value="3" readonly="true" />
+                            </h:column>
+                            <h:column>
+                                Especialidad: Platillo
+                            </h:column>
+                            <h:column></h:column>
+                            <h:column>
+                                <p:dataTable value="#{controladorLocal.local.menu}" var="_menu"> 
+                                    <p:column headerText="Categoría">
+                                        <h:outputText value="#{_menu.categoria}"/>
+                                    </p:column>
+                                    <p:column headerText="Precio Min">
+                                        <h:outputText value="#{_menu.precioMin}"/>
+                                    </p:column>
+                                    <p:column headerText="Precio Max">
+                                        <h:outputText value="#{_menu.precioMax}"/>
+                                    </p:column>
+                                </p:dataTable>﻿
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="Servicios"/>
+                                <p:selectManyCheckbox 
+                                        value="#{controladorLocal.local.servicios}"
+                                        layout="grid" columns="3">
+                                        <!--Modificacion de lineas-->
+                                    <f:selectItems 
+                                            value="#{controladorLocal.servicios}"
+                                            var="_servi"
+                                            itemLabel="#{_servi.nombre}" itemValue="#{_servi}"/>
+                                </p:selectManyCheckbox>
+                            </h:column>
+                        </h:panelGrid>
+                    </p:row>
+                    <p:row>
+                        <h:panelGrid columns="1">
+                            <h:column>
+                                <h:outputText value="Descripcion:" />
+                                <p>
+                                    <h:outputLabel value="Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo."/>
+                                </p>
+                            </h:column>
+                        </h:panelGrid>
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="Comentarios"/>
+                        <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true" value="#{controladorLocal.top5}" var="_loc" >
+                            <p:tab title="" disabled="true" >
+                                <h:panelGrid columns="3">
+                                    <p:column>
+                                        <h:panelGrid columns="1" style="font-size: 30pt">
+                                    #{controladorLocal.i}
+                                        </h:panelGrid>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid>
+                                            <h:graphicImage height="50" name="facebook.jpg" /> 
+                                        </h:panelGrid>
+                                    </p:column>
+                                    <p:column>
+                                        <p:row>
+                                            <h:panelGrid columns="5">
+                                                <p:column>
+                                                    <a href="verLocal.xhtml">#{_loc.nombre}</a>
+                                                </p:column>
+                                                <p:column/><p:column/><p:column/>
+                                                <p:column>
+                                                    <p:rating value="#{_loc.calificacion}" readonly="true" />
+                                                </p:column>
+                                            </h:panelGrid>
+                                        </p:row>
+                                        <p:row>
+                                            <h:panelGrid columns="1">
+                                                <p>#{_loc.descripcion}</p>
+                                            </h:panelGrid>
+                                        </p:row>
+                                    </p:column>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </p:row>
+                </h:column>
+                
+            </h:panelGrid>
+        </ui:define>
+    </ui:composition>
+</html>

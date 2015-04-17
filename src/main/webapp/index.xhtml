@@ -14,18 +14,39 @@ Pagina principal del sistema Jordan.
             <h:form id="top5">
                  <p:growl id="msgs" showDetail="true"/>
                  <h3 style="color: black">Top 5</h3>
-                 <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true" 
-                                   value="#{controladorLocal.top5}" var="_local">
-                     <p:tab title="#{_local.nombre}">
-                         <h:panelGrid columns="1">
-                             <p:rating value="#{_local.calificacion}" readonly="true" />
-                             <h:panelGrid columns="2" cellpadding="10">
-                                <h:graphicImage height="50" name="Imagen.png" /> 
-                                <h:outputText value="#{_local.descripcion}" />
-                                
-                             </h:panelGrid>
-                         </h:panelGrid>
-                     </p:tab>
+                 <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true" value="#{controladorLocal.top5}" var="_loc" >
+                    <p:tab title="" disabled="true" >
+                        <h:panelGrid columns="3">
+                            <p:column>
+                                <h:panelGrid columns="1" style="font-size: 30pt">
+                                    #{controladorLocal.i}
+                                </h:panelGrid>
+                            </p:column>
+                            <p:column>
+                                <h:panelGrid>
+                                    <h:graphicImage height="50" name="facebook.jpg" /> 
+                                </h:panelGrid>
+                            </p:column>
+                            <p:column>
+                                <p:row>
+                                    <h:panelGrid columns="5">
+                                        <p:column>
+                                            <a href="verLocal.xhtml">#{_loc.nombre}</a>
+                                        </p:column>
+                                        <p:column/><p:column/><p:column/>
+                                        <p:column>
+                                            <p:rating value="#{_loc.calificacion}" readonly="true" />
+                                        </p:column>
+                                    </h:panelGrid>
+                                </p:row>
+                                <p:row>
+                                    <h:panelGrid columns="1">
+                                        <p>#{_loc.descripcion}</p>
+                                    </h:panelGrid>
+                                </p:row>
+                            </p:column>
+                        </h:panelGrid>
+                    </p:tab>
                  </p:accordionPanel>
              </h:form>            
         </ui:define>

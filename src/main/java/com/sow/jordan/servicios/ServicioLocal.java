@@ -47,5 +47,8 @@ public interface ServicioLocal {
      * Método que carga la información de los servicios
      * @return Una lista con la información
      */
-    List<Servicio> cargarServicios();   
+    List<Servicio> cargarServicios();
+    
+    List<Lugar> buscarLugar(int id);
+    
 }
