@@ -108,7 +108,7 @@
                         <div align="center">
                             <br/>
                             <p:commandButton ajax="false" actionListener="#{controladorUsuario.guardarUsuario()}" 
-                                             value = "Registrarse" update=":usuarios @form"/>
+                                             value = "Registrarse" update=":usuarios @form" />
                         </div>
                     </p:dialog>
                 </h:form>
@@ -116,9 +116,11 @@
                 <h:form id="recuperrarContraseña">
                     <p:dialog header="RECUPERAR CONTRASEÑA" widgetVar="recuperar" modal="true"
                               height="100" closable="true" style="width: 120px;"><br/>
-                        <p:inputText placeholder="Correo" /><br/><br/><br/>
+                        <p:inputText id="email" placeholder="Correo" value="#{controladorUsuario.usuario.correo}"/>
+                        <br/><br/>
+                        <p:growl id="growl" life="2000" />
                         <div align="center">
-                            <p:commandButton value="Recuperar Contraseña"/>
+                            <p:commandButton value="Recuperar Contraseña" actionListener="#{controladorUsuario.enviarMail()}" update="growl" onclick="PF('recuperar').hide();PF('logeo').show();"/>
                         </div>
                     </p:dialog>
                 </h:form>

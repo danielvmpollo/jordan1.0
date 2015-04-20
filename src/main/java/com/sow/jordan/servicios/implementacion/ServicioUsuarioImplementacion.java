@@ -35,5 +35,15 @@ public class ServicioUsuarioImplementacion implements ServicioUsuario {
     public List<Usuario> cargarUsuarios() {
         return repositorioUsuario.cargarUsuarios();
     }
+
+    /**
+     *
+     * @param correo
+     * @return
+     */
+    @Override
+    public List<Usuario> buscarPassword(String correo) {
+        return repositorioUsuario.buscarPassword(correo);
+    }
     
 }
