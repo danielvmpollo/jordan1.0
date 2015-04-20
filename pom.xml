@@ -15,7 +15,7 @@
     </properties>
     
     <dependencies>
-        
+        <!--Para enviar mail-->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
