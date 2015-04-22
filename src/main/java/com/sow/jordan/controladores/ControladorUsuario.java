@@ -10,7 +10,6 @@ import com.sow.jordan.servicios.ServicioUsuario;
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
@@ -39,7 +38,6 @@ public class ControladorUsuario implements Serializable{
     @Autowired
     private ServicioUsuario servicioUsuario;
     
-    @Autowired
     private JavaMailSenderImpl mailSender;
     
     private Usuario usuario;
